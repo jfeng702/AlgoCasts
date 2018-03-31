@@ -23,14 +23,13 @@ function steps(n, row = 0, stair = '') {
    return;
   }
 
-
   if (n === stair.length) {
     console.log(stair);
     steps(n, row+1, '');
     return;
   }
 
-  if (stair.length <= row) {
+  if (stair.length < row) {
     steps(n, row, stair.concat('#'));
   } else {
     steps(n, row, stair.concat(' '));
