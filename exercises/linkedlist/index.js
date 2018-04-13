@@ -3,7 +3,7 @@
 // See 'directions' document
 
 class Node {
-  constructor(data, nextNode) {
+  constructor(data, nextNode = null) {
     this.data = data;
     this.next = nextNode;
   }
@@ -11,7 +11,7 @@ class Node {
 
 class LinkedList {
   constructor() {
-
+    this.head = null;
   }
 
   insertFirst(data) {
@@ -84,8 +84,7 @@ class LinkedList {
 
     while (current) {
       if (!current.next) {
-        let newNode = new Node;
-        newNode.data = data;
+        let newNode = new Node(data);
         current.next = newNode;
         break;
       } else {
@@ -136,12 +135,47 @@ class LinkedList {
       } else {
         prev.next = null;
       }
-
-
     }
-
   }
 
+  insertAt(data, index) {
+    let counter = 0;
+    if (!this.head) {
+      this.insertFirst(data);
+      return;
+    }
+    let current = this.head;
+    let prev = current;
+
+    while (counter < index) {
+      prev = current;
+      current = current.next;
+      if (!current.next) {
+        this.insertLast(data);
+        return;
+      }
+      counter++;
+    }
+    if (counter === index) {
+      let newNode = new Node(data, current);
+      if (index === 0) {
+        this.head = newNode;
+      } else {
+        prev.next = newNode;
+
+      }
+    }
+  }
+
+  forEach(fn) {
+    let node = this.head;
+    let counter = 0;
+    while (node) {
+      fn(node, counter);
+      node = node.next;
+      counter++;
+    }
+  }
 }
 
 module.exports = { Node, LinkedList };
